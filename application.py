@@ -1,7 +1,8 @@
 import os
+import requests
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask import render_template
+from flask import render_template, request
 application = Flask(__name__)
 
 
@@ -14,7 +15,17 @@ from models import Result
 
 @application.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    errors = []
+    results = {}
+    if request.method == 'POST':
+        try:
+            url = request.form['url']
+            r = requests.get(url)
+            print(r.text)
+        except:
+            errors.append('Could not open the URL')
+
+    return render_template('index.html', results=results, errors= errors)
 
 
 if __name__ == '__main__':
