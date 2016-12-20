@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask import render_template
 application = Flask(__name__)
 
 
@@ -11,14 +12,10 @@ db = SQLAlchemy(application)
 from models import Result
 
 
-@application.route('/')
-def hello():
-    return "Hello World!"
+@application.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template('index.html')
 
-
-@application.route('/<name>')
-def hello_name(name):
-    return "Hello {}!".format(name)
 
 if __name__ == '__main__':
     print(os.environ['APP_SETTINGS'])
