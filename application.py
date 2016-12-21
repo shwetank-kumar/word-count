@@ -22,6 +22,7 @@ from models import Result
 nltk.data.path.append('./nltk_data/')
 # stop = set(stopwords.words('english'))
 
+
 @application.route('/', methods=['GET', 'POST'])
 def index():
     errors = []
@@ -44,7 +45,6 @@ def index():
             no_stop_words_count = Counter(no_stop_words)
             results = sorted(no_stop_words_count.items(), key=operator.itemgetter(1), reverse=True)
             try:
-                print url
                 result = Result(url=url, result_all=word_count, result_no_stop_words=no_stop_words_count)
                 db.session.add(result)
                 db.session.commit()
