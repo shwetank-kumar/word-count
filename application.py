@@ -42,8 +42,7 @@ def index():
             word_count = Counter(raw_words)
             no_stop_words = [w for w in raw_words if w.lower() not in stops]
             no_stop_words_count = Counter(no_stop_words)
-            # print operator.itemgetter(1)
-            # print sorted(no_stop_words_count.items(), key=operator.itemgetter(1), reverse=True)
+            results = sorted(no_stop_words_count.items(), key=operator.itemgetter(1), reverse=True)
             try:
                 print url
                 result = Result(url=url, result_all=word_count, result_no_stop_words=no_stop_words_count)
