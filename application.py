@@ -8,7 +8,7 @@ from collections import Counter
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import render_template, request
-from stop_words import stops
+from stop_words import stop_wds
 
 application = Flask(__name__)
 
@@ -41,7 +41,7 @@ def index():
             non_punct = re.compile('.*[A-Za-z].*')
             raw_words = [w for w in text if non_punct.match(w)]
             word_count = Counter(raw_words)
-            no_stop_words = [w for w in raw_words if w.lower() not in stops]
+            no_stop_words = [w for w in raw_words if w.lower() not in stop_wds]
             no_stop_words_count = Counter(no_stop_words)
             results = sorted(no_stop_words_count.items(), key=operator.itemgetter(1), reverse=True)
             try:
