@@ -22,7 +22,7 @@ db = SQLAlchemy(application)
 
 q = Queue(connection=conn)
 
-from models import Result
+from models import *
 
 nltk.data.path.append('./nltk_data/')
 # stop = set(stopwords.words('english'))

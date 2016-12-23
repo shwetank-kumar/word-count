@@ -18,4 +18,7 @@ COPY . /app
 
 ENTRYPOINT [ "python" ]
 
+ENV APP_SETTINGS "config.DevelopmentConfig"
+ENV DATABASE_URL "postgresql://postgres:postgres@localhost/wordcount_dev"
+
 CMD [ "application.py" ]
