@@ -74,10 +74,6 @@ def count_and_save_words(url):
             return errors
 
 
-
-
-
-
 if __name__ == '__main__':
     print(os.environ['APP_SETTINGS'])
-    application.run()
+    application.run(host='0.0.0.0')
