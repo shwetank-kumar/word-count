@@ -20,16 +20,17 @@ application.config.from_object(os.environ['APP_SETTINGS'])
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(application)
 
+
 q = Queue(connection=conn)
 
 from models import *
 
 nltk.data.path.append('./nltk_data/')
-# stop = set(stopwords.words('english'))
 
 
 @application.route('/', methods=['GET', 'POST'])
 def index():
+
     results = {}
     if request.method == 'POST':
         url = request.form['url']
@@ -37,13 +38,21 @@ def index():
             url = 'http://' + url
 
         job = q.enqueue_call(func=count_and_save_words, args=(url, ), result_ttl=5000)
+
         print(job.get_id())
 
     return render_template('index.html', results=results)
 
 
+@application.route("/results/<job_key>", methods=['GET'])
+def get_results(job_key):
 
+    job = Job.fetch(job_key, connection=conn)
 
+    if job.is_finished:
+        return str(job.result), 200
+    else:
+        return "Nay!", 202
 
 
 def count_and_save_words(url):
@@ -76,4 +85,4 @@ def count_and_save_words(url):
 
 if __name__ == '__main__':
     print(os.environ['APP_SETTINGS'])
-    application.run(host='0.0.0.0')
+    application.run()

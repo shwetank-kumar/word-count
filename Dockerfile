@@ -8,10 +8,6 @@ RUN apt-get update -y && \
 
 RUN apt-get install -y postgresql postgresql-server-dev-9.5
 
-# Install redis server
-RUN brew install redis
-RUN redis-server
-
 # We copy just the requirements.txt first to leverage Docker cache
 COPY ./requirements.txt /app/requirements.txt
 
