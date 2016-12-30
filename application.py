@@ -30,7 +30,6 @@ nltk.data.path.append('./nltk_data/')
 
 @application.route('/', methods=['GET', 'POST'])
 def index():
-
     results = {}
     if request.method == 'POST':
         url = request.form['url']
