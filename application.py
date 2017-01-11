@@ -83,5 +83,5 @@ def count_and_save_words(url):
 
 
 if __name__ == '__main__':
-    print(os.environ['APP_SETTINGS'])
+    # print(os.environ['APP_SETTINGS'])
     application.run()
