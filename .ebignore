@@ -1,5 +1,0 @@
-# db Migration and Alembic files
-Migrations/*
-
-# .pyc files
-*.pyc
