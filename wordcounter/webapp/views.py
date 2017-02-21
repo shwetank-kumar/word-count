@@ -1,8 +1,9 @@
 from . import webapp
 from .tasks import count_and_save_words
 from flask import request, render_template
-# from .models import Result
-
+from .models import Result
+import operator
+from flask import jsonify
 
 @webapp.route('/', methods=['GET', 'POST'])
 def index():
@@ -20,7 +21,7 @@ def index():
 
 @webapp.route("/results/<task_id>", methods=['GET'])
 def get_results(task_id):
-    result = celeryd.AsyncResult(task_id)
+    result = count_and_save_words.AsyncResult(task_id)
     if result.status == 'SUCCESS':
         result = Result.query.filter_by(redis_id=task_id).first()
         results = sorted(result.result_no_stop_words.items(),

@@ -1,13 +1,19 @@
-rabbit:
-  image: rabbitmq:3-management
-  hostname: "my-rabbit"
-  env_file:
-    - .env
-  # environment:
-  #   RABBITMQ_DEFAULT_USER: "user"
-  #   RABBITMQ_DEFAULT_PASS: "password"
-  ports:
-    - "15672:15672"
-    - "8080:5672"
-  labels:
-    NAME: "rabbit-server"
+flask:
+    build: .
+    command: "python manage.py runserver"
+    ports:
+        - '5000:5000'
+    links:
+        - redis
+        - celery
+
+celery:
+    build: .
+    command: "celery worker -A celery_worker.celery --loglevel=info"
+    links:
+        - redis
+    
+redis:
+    image: redis
+    ports:
+        - '6379:6379'
