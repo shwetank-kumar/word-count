@@ -15,7 +15,7 @@ COPY . /word_count
 
 #ENV APP_SETTINGS "config.DevelopmentConfig"
 #ENV DATABASE_URL "postgresql://postgres:postgres@localhost/wordcount_dev"
+# EXPOSE 5000
 
-ENTRYPOINT [ "python" ]
-EXPOSE 5000
-CMD ["manage.py", "runserver", "--host", "0.0.0.0" ]
+# ENTRYPOINT [ "python" ]
+# CMD ["manage.py", "runserver", "--host", "0.0.0.0" ]
