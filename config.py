@@ -10,11 +10,12 @@ class DevelopmentConfig():
     def init_app(app):
         pass
 
-class DockerConfig():
+class DockerConfig(DevelopmentConfig):
     broker_url = 'redis://wordcount_redis_1:6379/0'
     result_backend = 'redis://wordcount_redis_1:6379/0'
+    val = 'see'
 
 config = {
     'development': DevelopmentConfig,
-    'default': DevelopmentConfig
+    'docker': DockerConfig
 }
