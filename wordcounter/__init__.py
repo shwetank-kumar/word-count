@@ -1,24 +1,34 @@
+import operator
 from flask import Flask
-from config import config
-# from config import DevelopmentConfig as SvcsConfig
-from config import DockerConfig as SvcsConfig
-from celery import Celery
-from flask_sqlalchemy import SQLAlchemy
+from flask import jsonify
+from flask import request, render_template
+# from models import Result
+from tasks import count_and_save_words
 
-celery = Celery(__name__, broker=SvcsConfig.broker_url,
-                backend=SvcsConfig.result_backend)
-db = SQLAlchemy()
+app = Flask(__name__)
 
-def create_app(config_name):
-    app = Flask(__name__)
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
-    
-    db.init_app(app)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    results = {}
+    if request.method == 'POST':
+        url = request.form['url']
+        if 'http://' not in url[:7]:
+            url = 'http://' + url
 
-    celery.conf.update(app.config)
+        task = count_and_save_words.apply_async((url,))
+        print task.id
+        print task.status
+    return render_template('index.html', results=results)
 
-    from .webapp import webapp
-    app.register_blueprint(webapp)
 
-    return app
+@app.route("/results/<task_id>", methods=['GET'])
+def get_results(task_id):
+    result = count_and_save_words.AsyncResult(task_id)
+    if result.status == 'SUCCESS':
+        # result = Result.query.filter_by(redis_id=task_id).first()
+        # results = sorted(result.result_no_stop_words.items(),
+        #                 key = operator.itemgetter(1),
+        #                 reverse = True)
+        return jsonify(results)
+    else:
+        return result.status, 202

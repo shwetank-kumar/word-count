@@ -1,17 +1,23 @@
-from wordcounter import celery
 from bs4 import BeautifulSoup
+from celery import Celery
 import nltk
 import re
 import requests
 from collections import Counter
 import os
 from stop_words import stop_wds
-from models import Result
-from .. import db
+from config import *
+# from models import Result
 
 pwd = os.path.dirname(os.path.abspath(__file__))
 
 nltk.data.path.append(pwd + '/data/nltk_data/')
+
+celery = Celery(__name__, broker=DevelopmentConfig.broker_url,
+                backend=DevelopmentConfig.result_backend)
+
+print DevelopmentConfig.broker_url
+print DevelopmentConfig.result_backend
 
 @celery.task(bind=True)
 def count_and_save_words(self, url):
@@ -31,7 +37,7 @@ def count_and_save_words(self, url):
         word_count = Counter(raw_words)
         no_stop_words = [w for w in raw_words if w.lower() not in stop_wds]
         no_stop_words_count = Counter(no_stop_words)
-        
+
         try:
             result = Result(url=url, redis_id=self.request.id, result_all=word_count,
                             result_no_stop_words=no_stop_words_count)
