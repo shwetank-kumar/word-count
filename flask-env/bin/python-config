@@ -1,4 +1,4 @@
-#!/Users/shwetank/universe/Computing/courses/fullstack/word_count/flask-env/bin/python
+#!/Users/shwetank/universe/Computing/courses/fullstack/word_count_celery/flask-env/bin/python
 
 import sys
 import getopt
