@@ -57,4 +57,15 @@ function delete_celery_image()
   docker rmi $(docker images -f dangling=true -q)
 }
 
+function build_wordcounter()
+{
+  docker build -f ./Dockerfile.wordcounter -t wordcounter .
+}
+
+function run_wordcounter()
+{
+  docker run -d -p 5000:5000 --name wordcounter_app --net=redis-celery --rm=false wordcounter
+  # docker run --name celery-worker celery
+}
+
 $@

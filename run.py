@@ -1,3 +1,5 @@
+from wordcounter.config import *
 from wordcounter import app
 
-app.run(debug=True)
+# print Config.HOST
+app.run(host=DevelopmentConfig.HOST, debug=True)

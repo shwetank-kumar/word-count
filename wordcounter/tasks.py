@@ -16,8 +16,8 @@ nltk.data.path.append(pwd + '/data/nltk_data/')
 celery = Celery(__name__, broker=DevelopmentConfig.broker_url,
                 backend=DevelopmentConfig.result_backend)
 
-print DevelopmentConfig.broker_url
-print DevelopmentConfig.result_backend
+# print DevelopmentConfig.broker_url
+# print DevelopmentConfig.result_backend
 
 @celery.task(bind=True)
 def count_and_save_words(self, url):
