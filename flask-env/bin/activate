@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/shwetank/universe/Computing/courses/fullstack/word_count_celery/flask-env"
+VIRTUAL_ENV="/Users/shwetank/universe/Computing/courses/fullstack/word_count/flask-env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

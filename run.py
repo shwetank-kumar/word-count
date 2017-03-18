@@ -1,3 +1,3 @@
-from wordcounter.application import app
+from wordcounter import app
 
 app.run(debug=True)

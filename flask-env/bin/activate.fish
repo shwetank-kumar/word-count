@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/shwetank/universe/Computing/courses/fullstack/word_count_celery/flask-env"
+set -gx VIRTUAL_ENV "/Users/shwetank/universe/Computing/courses/fullstack/word_count/flask-env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
