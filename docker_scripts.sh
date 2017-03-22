@@ -78,4 +78,22 @@ function run_wordcounter()
   docker run -d -p 5000:5000 --name wordcounter_app --net=redis-celery --rm=false wordcounter
 }
 
+# Run postgres db
+function run_db()
+{
+  # Command to kill postres process running on localhost: sudo pkill -u postgres
+  docker run -d -p 5432:5432 --name db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
+}
+
+# Run postgres db
+function stop_db()
+{
+  docker stop db
+}
+
+# Run postgres db
+function remove_db()
+{
+  docker rm db
+}
 $@
