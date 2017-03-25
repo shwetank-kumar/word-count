@@ -2,13 +2,13 @@
 # Create network to which all services connect
 function create_network()
 {
-  docker network create redis-celery
+  docker network create wordcounter-net
 }
 
 # Start redis server
 function start_redis()
 {
-  docker run -d -p 6379:6379 --name redis-server --net=redis-celery redis
+  docker run -d -p 6379:6379 --name redis-server --net=wordcounter-net redis
 }
 
 # Stop redis server
@@ -38,7 +38,7 @@ function build_celery()
 # Run celery image
 function run_celery()
 {
-  docker run --name celery-worker --net=redis-celery --rm=false celery
+  docker run -d --name celery-worker --net=wordcounter-net --rm=false celery
 }
 
 # Start celery container
@@ -75,14 +75,14 @@ function build_wordcounter()
 # Run wordcounting app
 function run_wordcounter()
 {
-  docker run -d -p 5000:5000 --name wordcounter_app --net=redis-celery --rm=false wordcounter
+  docker run -d -p 5000:5000 --name wordcounter-app --net=wordcounter-net wordcounter
 }
 
 # Run postgres db
 function run_db()
 {
   # Command to kill postres process running on localhost: sudo pkill -u postgres
-  docker run -d -p 5432:5432 --name db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
+  docker run -d -p 5432:5432 --name db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --net=wordcounter-net postgres
 }
 
 # Run postgres db

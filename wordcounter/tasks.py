@@ -7,7 +7,8 @@ from collections import Counter
 import os
 from stop_words import stop_wds
 from config import *
-# from models import Result
+from models import Result
+from wordcounter import db
 
 pwd = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,6 +36,7 @@ def count_and_save_words(self, url):
         no_stop_words = [w for w in raw_words if w.lower() not in stop_wds]
         no_stop_words_count = Counter(no_stop_words)
 
+        print db
         try:
             result = Result(url=url, redis_id=self.request.id, result_all=word_count,
                             result_no_stop_words=no_stop_words_count)

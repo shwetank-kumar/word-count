@@ -1,4 +1,4 @@
-from wordcounter.application import db
+from wordcounter import db
 from sqlalchemy.dialects.postgresql import JSON
 
 
