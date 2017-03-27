@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.wordcounter
+    container_name: wordcounter-app
+    depends_on:
+      - redis
+    image: wordcounter
+    network_mode: wordcounter-net
+    ports:
+     - "5000:5000"
+
+  redis:
+    container_name: redis-server
+    image: redis
+    network_mode: wordcounter-net
+    ports:
+     - "6379:6379"
+
+    # volumes:
+    #  - ./
+    # depends_on:
+    # env_file:

@@ -36,7 +36,12 @@ def count_and_save_words(self, url):
         no_stop_words = [w for w in raw_words if w.lower() not in stop_wds]
         no_stop_words_count = Counter(no_stop_words)
 
-        print db
+        # print db
+        # print url
+        # print self.request.id
+        # print word_count
+        # print no_stop_words
+        
         try:
             result = Result(url=url, redis_id=self.request.id, result_all=word_count,
                             result_no_stop_words=no_stop_words_count)
