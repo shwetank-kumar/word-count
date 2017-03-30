@@ -41,7 +41,7 @@ def count_and_save_words(self, url):
         # print self.request.id
         # print word_count
         # print no_stop_words
-        
+
         try:
             result = Result(url=url, redis_id=self.request.id, result_all=word_count,
                             result_no_stop_words=no_stop_words_count)

@@ -2,7 +2,6 @@ import os
 from wordcounter import app, db
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
-from flask import current_app
 
 manager = Manager(app)
 migrate = Migrate(app, db)

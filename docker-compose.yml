@@ -8,10 +8,14 @@ services:
     container_name: wordcounter-app
     depends_on:
       - redis
+      - celery
+      - db
     image: wordcounter
     network_mode: wordcounter-net
     ports:
      - "5000:5000"
+    volumes:
+     - .:/wordcounter
 
   redis:
     container_name: redis-server
@@ -19,6 +23,28 @@ services:
     network_mode: wordcounter-net
     ports:
      - "6379:6379"
+
+  celery:
+    build:
+      context: ./
+      dockerfile: Dockerfile.celery
+    container_name: celery-worker
+    depends_on:
+      - redis
+    image: celery
+    network_mode: wordcounter-net
+
+  db:
+    container_name: db
+    image: postgres
+    network_mode: wordcounter-net
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./cache:/tmp/cache
 
     # volumes:
     #  - ./

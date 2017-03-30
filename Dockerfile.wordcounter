@@ -9,8 +9,9 @@ FROM python:2.7-slim
 # # Install app dependencies
 # RUN pip install --upgrade pip
 
-WORKDIR /app
-COPY . /app
+ADD . /word_count_celery
+WORKDIR /word_count_celery
+
 
 RUN pip install -r requirements.txt
 
