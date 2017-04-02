@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from celery import Celery
+from datetime import datetime
 import nltk
 import re
 import requests
@@ -35,7 +36,7 @@ def count_and_save_words(self, url):
         word_count = Counter(raw_words)
         no_stop_words = [w for w in raw_words if w.lower() not in stop_wds]
         no_stop_words_count = Counter(no_stop_words)
-
+        timestamp = datetime.now()
         # print db
         # print url
         # print self.request.id
@@ -44,7 +45,7 @@ def count_and_save_words(self, url):
 
         try:
             result = Result(url=url, redis_id=self.request.id, result_all=word_count,
-                            result_no_stop_words=no_stop_words_count)
+                            result_no_stop_words=no_stop_words_count, ts=timestamp)
             db.session.add(result)
             db.session.commit()
             return result.id

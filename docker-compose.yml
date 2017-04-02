@@ -1,5 +1,5 @@
 version: '2'
-
+#this test
 services:
   app:
     build:
@@ -15,7 +15,7 @@ services:
     ports:
      - "5000:5000"
     volumes:
-     - .:/wordcounter
+     - /Users/shwetank/universe/Computing/courses/fullstack/word_count_celery:/word_count_celery
 
   redis:
     container_name: redis-server
@@ -34,6 +34,7 @@ services:
     image: celery
     network_mode: wordcounter-net
 
+  # TODO Map the volume to migrations and then run migration on docker-compose up using entrypoint script
   db:
     container_name: db
     image: postgres
@@ -44,7 +45,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./cache:/tmp/cache
+      - /Users/shwetank/universe/Computing/courses/fullstack/word_count_celery/migrations:/migrations
 
     # volumes:
     #  - ./
