@@ -34,7 +34,7 @@ services:
     image: celery
     network_mode: wordcounter-net
 
-  # TODO Map the volume to migrations and then run migration on docker-compose up using entrypoint script
+  # TODO run migrations if the docker is creating the db for the first time
   db:
     container_name: db
     image: postgres
@@ -42,6 +42,7 @@ services:
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
