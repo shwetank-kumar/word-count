@@ -16,7 +16,7 @@ services:
     ports:
      - "5000:5000"
     volumes:
-     - .:/wordcounter
+     - /Users/shwetank/universe/Computing/courses/fullstack/word_count_celery:/word_count_celery
 
   redis:
     container_name: redis-server
