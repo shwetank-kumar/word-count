@@ -6,7 +6,7 @@
     $log.log("test");
 
     // get the URL from the input
-    // var userInput = $scope.url;
+    var userInput = $scope.url;
 
     // fire the API request
     $http.post('/start', {"url": userInput}).
