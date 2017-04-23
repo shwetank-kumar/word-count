@@ -48,7 +48,5 @@ services:
     volumes:
       - /Users/shwetank/universe/Computing/courses/fullstack/word_count_celery/migrations:/migrations
 
-    # volumes:
-    #  - ./
     # depends_on:
     # env_file:
