@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-<script src="{{ url_for('static', filename='main.js') }}"></script>
-<html ng-app="WordcountApp">
+<html>
   <head>
     <title>Wordcount</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +10,13 @@
       }
     </style>
   </head>
-  <body ng-controller="WordcountController">
+  <body>
     <div class="container">
       <div class="row">
         <div class="col-sm-5 col-sm-offset-1">
           <h1>Wordcount 3000</h1>
           <br>
-          <form role="form" ng-submit="getResults()">
+          <form role="form" method="POST" action="/">
             <div class="form-group">
               <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;">
             </div>
