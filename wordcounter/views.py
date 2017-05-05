@@ -1,7 +1,6 @@
 import operator
 from flask import jsonify
 from flask import request, render_template
-import json
 from tasks import count_and_save_words
 from wordcounter.config import DevelopmentConfig
 from wordcounter import app
@@ -9,18 +8,14 @@ from wordcounter.models import Result
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    results = {}
+    if request.method == 'POST':
+        url = request.form['url']
+        if 'http://' not in url[:7]:
+            url = 'http://' + url
 
-@app.route('/start', methods=['POST'])
-def get_counts():
-    # Get url
-    data = json.loads(request.data.decode())
-    url = data["url"]
-    if 'http://' not in url[:7]:
-        url = 'http://' + url
-
-    task = count_and_save_words.apply_async((url,))
-    return task.task_id
+        task = count_and_save_words.apply_async((url,))
+    return render_template('index.html', results=results)
 
 
 @app.route("/results/<task_id>", methods=['GET'])
